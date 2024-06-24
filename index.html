@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React App with BeforeUnload</title>
-  </head>
-  <body>
-    <a href="https://syntax.spectrallabs.xyz/" target="_blank" download
-      >open link in a default browser</a
-    >
-    <input></input>
+</head>
+<body>
+    <a href="https://syntax.spectrallabs.xyz/" target="_blank" download>open link in a default browser</a>
 
     <script>
-      window.addEventListener("beforeunload", function (event) {
-        var message = "Вы уверены, что хотите покинуть эту страницу?";
-        event.preventDefault();
-        event.returnValue = message; // Для старых браузеров
-        return message;
-      });
+        function showAlert() {
+            var message = "Вы уверены, что хотите покинуть эту страницу?";
+            alert(message); // Альтернативное предупреждение для мобильных браузеров
+        }
 
-      window.addEventListener("pagehide", function (event) {
-        var message = "Вы уверены, что хотите покинуть эту страницу?";
-        event.preventDefault();
-        alert(message); // Альтернативное предупреждение для мобильных браузеров
-      });
+        window.addEventListener('beforeunload', function (event) {
+            var message = "Вы уверены, что хотите покинуть эту страницу?";
+            event.preventDefault();
+            event.returnValue = message; // Для старых браузеров
+            return message;
+        });
+
+        window.addEventListener('pagehide', function (event) {
+            showAlert();
+        });
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') {
+                showAlert();
+            }
+        });
     </script>
-  </body>
+</body>
 </html>
