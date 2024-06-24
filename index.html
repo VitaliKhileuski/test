@@ -23,6 +23,7 @@
         });
 
         window.addEventListener('pagehide', function (event) {
+		vent.preventDefault();
             showAlert();
         });
 
